@@ -171,3 +171,4 @@ const Item = ({ label, value }) => (
     <p className="text-sm font-medium text-gray-800">{value || "-"}</p>
   </div>
 );
+

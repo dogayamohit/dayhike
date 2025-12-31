@@ -7,6 +7,7 @@ import Input from "../../components/form/input/InputField";
 import Select from "../../components/form/Select";
 import Label from "../../components/form/Label";
 import Button from "../../components/ui/button/Button";
+import MultiSelect from "../../components/form/MultiSelect";
 
 const daysOfWeek = [
   "Sunday",
@@ -40,6 +41,21 @@ export default function AddPlace() {
     }, {}),
   });
 
+  const initialModalData = {
+    moderators: [],
+    placeCategory: [],
+    moderator: [], // renamed logically, or keep if required
+  };
+
+  // Options
+const moderatorOptions = [
+  { label: "Dani Perry", value: "Dani Perry" },
+  { label: "Day Hike", value: "Day Hike" },
+  { label: "Evan Birenbaum", value: "Evan Birenbaum" },
+  { label: "Tyler Ahles", value: "Tyler Ahles" },
+  { label: "Brad", value: "Brad" },
+];
+
   const [imagePreview, setImagePreview] = useState(null);
 
   const handleChange = (e) => {
@@ -60,6 +76,14 @@ export default function AddPlace() {
     }));
   };
 
+  const handleMultiSelect = (name, values) => {
+    setForm((prev) => ({
+      ...prev,
+      [name]: values,
+    }));
+  };
+
+
   const handleSubmit = () => {
     console.log("Add Place Payload:", form);
     toast.success("Place added successfully");
@@ -79,48 +103,50 @@ export default function AddPlace() {
           </div>
           <div>
             <Label>Title</Label>
-            <Input name="title" value={form.title} onChange={handleChange} />
+            <Input name="title" value={form.title} onChange={handleChange} placeholder={"Enter Title"} />
           </div>
+          {/* Place Category */}
           <div>
-            <Label>Place Category</Label>
-            <Select
-              name="placeCategory"
-              value={form.placeCategory}
-              onChange={handleChange}
+            <MultiSelect
+              label="Place Category"
               options={[
-                { label: "Bus Stop", value: "Bus Stop" },
-                { label: "Park", value: "Park" },
+                { value: "Bus Stop", text: "Bus Stop" },
+                { value: "Park", text: "Park" },
               ]}
+              value={form.placeCategory}
+              onChange={(values) =>
+                handleMultiSelect("placeCategory", values)
+              }
             />
           </div>
+
           <div>
             <Label>Address</Label>
-            <Input name="address" value={form.address} onChange={handleChange} />
-          </div>
-          <div>
-            <Label>City</Label>
-            <Input name="city" value={form.city} onChange={handleChange} />
-          </div>
-          <div>
-            <Label>State</Label>
-            <Input name="state" value={form.state} onChange={handleChange} />
-          </div>
-          <div>
-            <Label>Zip Code</Label>
-            <Input name="zipCode" value={form.zipCode} onChange={handleChange} />
+            <Input name="address" value={form.address} onChange={handleChange} placeholder={"Enter Location"} />
           </div>
           <div>
             <Label>Website</Label>
-            <Input name="website" value={form.website} onChange={handleChange} />
+            <Input name="website" value={form.website} onChange={handleChange} placeholder={"Enter URL"} />
           </div>
           <div>
             <Label>Phone</Label>
-            <Input name="phone" value={form.phone} onChange={handleChange} />
+            <Input name="phone" value={form.phone} onChange={handleChange} placeholder={"Enter The Phone Number"} />
           </div>
+          {/* Moderator */}
           <div>
-            <Label>Moderator</Label>
-            <Input name="moderator" value={form.moderator} onChange={handleChange} />
+            <MultiSelect
+              label="Moderator"
+              options={moderatorOptions.map((opt) => ({
+                value: opt.value,
+                text: opt.label,
+              }))}
+              value={form.moderator}
+              onChange={(values) =>
+                handleMultiSelect("moderator", values)
+              }
+            />
           </div>
+
         </div>
 
         {/* Description */}

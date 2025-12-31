@@ -167,10 +167,10 @@ export default function AddGroup() {
         </div>
 
         {/* Members */}
-        <div>
+        {/* <div>
           <Label>Members (optional)</Label>
           <Input name="member" value={form.member} onChange={handleChange} />
-        </div>
+        </div> */}
 
         {/* Address */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
